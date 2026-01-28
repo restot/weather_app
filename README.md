@@ -78,6 +78,8 @@ sequenceDiagram
 | `SECRET_KEY_BASE` | Prod only | Rails secret (`bin/rails secret`) |
 | `REDIS_URL` | Prod only | Redis connection URL (default `redis://redis:6379/0`) |
 | `CLOUDFLARE_TUNNEL_TOKEN` | No | Cloudflare Tunnel token for zero-trust access |
+| `AXIOM_TOKEN` | No | Axiom API token for log shipping ([get one](https://axiom.co/)) |
+| `AXIOM_DATASET` | No | Axiom dataset name to ingest logs into |
 | `MAPBOX_QUOTA_OFFSET` | No | Added to tracked Mapbox monthly usage (default `0`) |
 | `OPENWEATHERMAP_QUOTA_OFFSET` | No | Added to tracked OpenWeatherMap monthly usage (default `0`) |
 
@@ -103,7 +105,7 @@ cp .env.example .env
 docker-compose up -d
 ```
 
-Starts Rails, Redis, Nginx (port 80), and optionally a Cloudflare tunnel.
+Starts Rails, Redis, Nginx (port 80), Fluent Bit (log shipping to Axiom), and optionally a Cloudflare tunnel.
 
 ## Tests
 
