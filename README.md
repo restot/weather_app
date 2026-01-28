@@ -58,6 +58,17 @@ sequenceDiagram
     C-->>U: render show
 ```
 
+## Caching
+
+| Data | TTL | Cache Key |
+|------|-----|-----------|
+| Geocoding | 7 days | `geocoding:{address}` |
+| Current weather | 30 min | `weather:zip:{zip}:current` or `weather:coords:{lat},{lng}:current` |
+| 5-day forecast | 3 hours | `weather:zip:{zip}:forecast` or `weather:coords:{lat},{lng}:forecast` |
+
+Weather data is keyed by zip code when available, falling back to coordinates. This groups nearby addresses under the same cache entry while keeping the data granular enough for accurate forecasts.
+
+
 ## Tech stack
 
 | What | Choice | Why |
