@@ -1,5 +1,7 @@
 # Weather Forecast
 
+**Demo:** [weather-app.restot.top](https://weather-app.restot.top/)
+
 Rails app that takes a US address, geocodes it, fetches the weather, and caches results by coordinates.
 
 What you get: current temp/conditions, daily high/low, 5-day forecast, and humidity. Current weather is cached for 30 minutes and the extended forecast for 3 hours — a "Cached" badge shows when you're seeing stored data.
