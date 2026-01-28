@@ -1,0 +1,22 @@
+<h1>Weather Forecast</h1>
+
+<% if flash[:error] %>
+  <article aria-label="Error" role="alert">
+    <p style="color: var(--pico-color-red-500);"><%= flash[:error] %></p>
+  </article>
+<% end %>
+
+<%= form_with url: forecasts_path, method: :post, local: true do |f| %>
+  <fieldset>
+    <%= f.label :address, "Enter Address" %>
+    <%= f.text_field :address, placeholder: "1 Apple Park Way, Cupertino, CA or Zip Code", required: true %>
+  </fieldset>
+
+  <label>
+    <%= check_box_tag :bypass_cache %> Bypass cache
+  </label>
+
+  <%= f.submit "Get Forecast" %>
+<% end %>
+
+<%= render "debug_panel" %>

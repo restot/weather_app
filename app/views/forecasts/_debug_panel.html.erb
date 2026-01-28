@@ -1,0 +1,44 @@
+<details>
+  <summary>Debug Panel</summary>
+
+  <section>
+    <h4>Quota Status</h4>
+    <% @quota_status.each do |provider, status| %>
+      <article>
+        <header><strong><%= provider %></strong></header>
+        <p>
+          Requests this minute: <%= status[:requests_this_minute] %> / <%= status[:limits][:per_minute] || "unlimited" %><br>
+          Requests this month: <%= status[:requests_this_month] %> / <%= status[:limits][:per_month] || "unlimited" %><br>
+          Within limits: <%= status[:within_limits] %><br>
+          Quota offset: <%= status[:quota_offset] %>
+        </p>
+      </article>
+    <% end %>
+  </section>
+
+  <% if @cache_details.present? %>
+    <section>
+      <h4>Cache Details</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>Layer</th>
+            <th>Cache Key</th>
+            <th>Hit/Miss</th>
+            <th>Refresh In</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @cache_details.each do |layer, details| %>
+            <tr>
+              <td><%= layer %></td>
+              <td><code><%= details[:key] %></code></td>
+              <td><%= details[:hit] ? "HIT" : "MISS" %></td>
+              <td><%= details[:ttl] ? distance_of_time_in_words(details[:ttl]) : "—" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </section>
+  <% end %>
+</details>

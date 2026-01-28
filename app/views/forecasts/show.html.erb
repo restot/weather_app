@@ -1,0 +1,57 @@
+<header>
+  <h1>Weather Forecast</h1>
+</header>
+
+<article>
+  <header>
+    <hgroup>
+      <h2><%= @location[:city] %>, <%= @location[:state] %> <%= @location[:zip] %></h2>
+      <% if @cached %>
+        <p><mark>Cached</mark></p>
+      <% end %>
+    </hgroup>
+  </header>
+
+  <section>
+    <h3>Current Weather</h3>
+    <p><strong><%= @forecast[:current][:temp] %>&deg;F</strong> - <%= @forecast[:current][:condition] %></p>
+    <p>
+      <strong>High: <%= @forecast[:high] %>&deg;F</strong> |
+      <strong>Low: <%= @forecast[:low] %>&deg;F</strong>
+    </p>
+    <p>Humidity: <%= @forecast[:current][:humidity] %>%</p>
+  </section>
+
+  <section>
+    <h3>5-Day Forecast</h3>
+    <figure>
+      <table>
+        <thead>
+          <tr>
+            <% @forecast[:extended].each do |day| %>
+              <th scope="col"><%= day[:date] %></th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <% @forecast[:extended].each do |day| %>
+              <td><%= day[:condition] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <% @forecast[:extended].each do |day| %>
+              <td><strong><%= day[:high] %></strong> / <%= day[:low] %>&deg;F</td>
+            <% end %>
+          </tr>
+        </tbody>
+      </table>
+    </figure>
+  </section>
+
+  <footer>
+    <%= link_to "Search Again", root_path, role: "button" %>
+  </footer>
+</article>
+
+<%= render "debug_panel" %>
