@@ -149,7 +149,10 @@ Covers services, request cycle, and cache behavior (94 examples). No API keys or
 - **Weather maps** — OpenWeatherMap tile layers on Mapbox GL JS: precipitation, clouds, pressure, temperature, and wind
 - **Historical comparison** — Show today's weather vs. 1, 3, 5, or N years ago using OpenWeatherMap's historical data API
 - **CI/CD pipeline** — GitHub Actions for automated tests and deployments on push
-
+- **Push notifications** — Web Push API for weather alerts: temperature drops, severe weather warnings, and custom threshold alerts for saved locations
+- **Stripe integration** — Premium tiers for higher alert frequency, additional saved locations, and extended historical data access
+- **Feedback form** — Collect user feedback with simple form, stored in database for product insights
+- **AI recommendations** — LLM-powered suggestions for trip planning, event scheduling, and activity ideas based on historical weather patterns. Subscribe to AI-monitored alerts that check forecasts every 3h for 5 days ahead and notify on significant changes
 ## License
 
 [MIT](LICENSE)
