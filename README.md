@@ -1,3 +1,4 @@
+
 # Weather Forecast
 
 **Demo:** [weather-app.restot.top](https://weather-app.restot.top/)
@@ -129,6 +130,25 @@ Covers services, request cycle, and cache behavior (94 examples). No API keys or
 | Cache by zip | Efficient for nearby addresses, less granular than lat/lng |
 | Service objects | More files, but thin controller and isolated tests |
 | Debug panel in all environments | This is a portfolio project — the panel shows cache status and quota usage to demonstrate how the internals work |
+
+## What I'd improve with more time
+
+- **Air quality data** — OpenWeatherMap's air pollution endpoint for AQI, PM2.5, O3, and other pollutants alongside the forecast
+- **Interactive map** — Mapbox GL JS embed with weather overlay layers (clouds, precipitation, temperature) and bbox-based zoom from geocoder precision
+- **Temperature unit toggle** — Fahrenheit/Celsius switch persisted in session
+- **Dark/light/auto theme toggle** — Pico CSS supports it natively via `data-theme`; just needs a toggle and session persistence
+- **User sessions with favorites and history** — Anonymous cookie-based sessions backed by Redis, with localStorage/fingerprint recovery. Track last 50 searches (24h TTL) and up to 5 saved locations (30-day sliding TTL)
+- **Provider abstraction** — Base `GeocodingProvider` and `WeatherProvider` classes with a `ProviderFactory` for ENV-based swapping (e.g., Google Geocoding, WeatherAPI.com)
+- **Parallel API requests** — Fetch current weather, forecast, and air quality concurrently with `concurrent-ruby`
+- **Request coalescing** — Deduplicate identical in-flight API calls so concurrent users for the same zip don't trigger redundant requests
+- **Edge caching** — Cloudflare cache rules with `stale-while-revalidate` and cache tags for targeted purging by zip
+- **Health check endpoints** — `/health/live` and `/health/ready` with Redis connectivity and provider configuration checks for container orchestration
+- **Horizontal scaling** — Puma cluster mode with `WEB_CONCURRENCY`, Redis connection pooling, nginx least-conn upstream balancing, and Kubernetes cluster readiness
+- **Centralized logging** — Request ID correlation and OpenTelemetry tracing (Axiom + Fluent Bit already wired in docker-compose)
+- **Error tracking** — Sentry integration for exception monitoring and alerting
+- **Weather maps** — OpenWeatherMap tile layers on Mapbox GL JS: precipitation, clouds, pressure, temperature, and wind
+- **Historical comparison** — Show today's weather vs. 1, 3, 5, or N years ago using OpenWeatherMap's historical data API
+- **CI/CD pipeline** — GitHub Actions for automated tests and deployments on push
 
 ## License
 
