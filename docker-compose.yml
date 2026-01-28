@@ -11,6 +11,11 @@ services:
       - OPENWEATHERMAP_QUOTA_OFFSET=${OPENWEATHERMAP_QUOTA_OFFSET:-0}
     depends_on:
       - redis
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: fluent-bit:24224
+        tag: app
     restart: unless-stopped
 
   redis:
@@ -25,6 +30,32 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
       - app
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: fluent-bit:24224
+        tag: nginx
+    restart: unless-stopped
+
+  fluent-bit:
+    image: fluent/fluent-bit:latest
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - AXIOM_TOKEN=${AXIOM_TOKEN}
+      - AXIOM_DATASET=${AXIOM_DATASET}
+    command: >
+      /fluent-bit/bin/fluent-bit
+      -i forward
+      -o http
+      -p Host=api.axiom.co
+      -p Port=443
+      -p URI=/v1/datasets/$${AXIOM_DATASET}/ingest
+      -p Format=json_lines
+      -p Header="Authorization Bearer $${AXIOM_TOKEN}"
+      -p Header="Content-Type application/x-ndjson"
+      -p tls=on
     restart: unless-stopped
 
   cloudflared:
